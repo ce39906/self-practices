@@ -14,4 +14,4 @@ std::vector<std::string> Suggest(const std::string& word);
 g++ --std=c++11 -O2 trie.cpp test_trie.cpp -o trie
 ```
 ### Execute result
-![pic](https://github.com/ce39906/practices/blob/master/imgs/trie.jpg)
+![pic](https://github.com/ce39906/self-practices/blob/master/imgs/trie.jpg)
