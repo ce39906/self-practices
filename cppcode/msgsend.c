@@ -1,9 +1,9 @@
-#include<unistd.h>
-#include<stdlib.h>
-#include<stdio.h>
-#include<string.h>
-#include<errno.h>
-#include<sys/msg.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <sys/msg.h>
 #include <iostream>
 
 using namespace std;
@@ -20,7 +20,7 @@ int main()
     struct msg_st data;
     char buffer[BUFSIZ];
     int msgid = -1;
-    msgid = msgget((key_t)1234,0666 | IPC_CREAT);
+    msgid = msgget((key_t)1234, 0666 | IPC_CREAT);
     if(msgid == -1)
     {
         cout <<"msgget failed with error"<<endl;
@@ -29,15 +29,16 @@ int main()
     while(running)
     {
         cout << "Enter some text: ";
-        fgets(buffer,BUFSIZ,stdin);
+        fgets(buffer, BUFSIZ, stdin);
         data.msg_type = 1;
-        strcpy(data.text,buffer);
-        if(msgsnd(msgid,(void*)&data,MAX_TEXT,0) == -1)
+        strcpy(data.text, buffer);
+        if(msgsnd(msgid, (void*)&data, MAX_TEXT, 0) == -1)
         {
             cout << "msgsnd faild" << endl;
             return -1;
         }
-        if(strncmp(buffer,"end",3) == 0)
+
+        if(strncmp(buffer, "end", 3) == 0)
             running = 0;
         sleep(1);
     }

@@ -4,11 +4,13 @@
     > Mail: carbon06@163.com 
     > Created Time: 2017-06-22 17:16:54
  ************************************************************************/
-#ifndef SINGLETON_CPP
-#define SINGLETON_CPP
+#ifndef SINGLETON_HPP
+#define SINGLETON_HPP
+
 #include "boost/noncopyable.hpp"
 #include <mutex>
 #include <memory>
+
 namespace util
 {
 template<typename T>
@@ -17,7 +19,7 @@ class Singleton : boost::noncopyable
   public:
     static T& instance()
     {
-        std::call_once(Singleton::ponce_,&Singleton::init);
+        std::call_once(Singleton::ponce_, &Singleton::init);
         return *value_;
     }
   private:
@@ -38,6 +40,6 @@ std::once_flag Singleton<T>::ponce_;
 
 template<typename T>
 T* Singleton<T>::value_ = NULL;
-}
+} // ns util
 
 #endif

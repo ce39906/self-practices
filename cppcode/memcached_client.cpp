@@ -14,25 +14,26 @@ int main()
 
     // connect server
     memc = memcached_create(NULL);
-    servers = memcached_server_list_append(NULL,"10.134.86.133",11211,&rc);
-    rc = memcached_server_push(memc,servers);
+    servers = memcached_server_list_append(NULL, "10.134.86.133", 11211, &rc);
+    rc = memcached_server_push(memc, servers);
     memcached_server_free(servers);
 
     // save data
     strcpy(value,"this is the first memcached value");
-    rc = memcached_set(memc,"key1",4,value,strlen(value),time_t(0),flags);
-    if (rc == MEMCACHED_SUCCESS )
+    rc = memcached_set(memc, "key1", 4, value, strlen(value), time_t(0), flags);
+    if (rc == MEMCACHED_SUCCESS)
     {
         cout << "Save key key1 success, data is : " << value << endl;
     }
 
     //get data
     size_t value_length = strlen(value);
-    char* result = memcached_get(memc,"key1",4,&value_length,&flags,&rc);
+    char* result = memcached_get(memc, "key1", 4, &value_length, &flags, &rc);
     if (rc == MEMCACHED_SUCCESS)
     {
         cout << "Get key key1 success, value is : " << result << endl;
-    }else
+    }
+    else
     {
         cout<< "Get key key1 error" << endl;
     }
@@ -46,14 +47,14 @@ int main()
     const char* keys[] = {"key1"};
     size_t key_length[] = {4};
 
-    rc = memcached_mget(memc,keys,key_length,1);
-    return_value = memcached_fetch(memc,return_key,&return_key_length,&return_value_length,&flags,&rc);
+    rc = memcached_mget(memc, keys, key_length, 1);
+    return_value = memcached_fetch(memc, return_key, &return_key_length, &return_value_length, &flags, &rc);
     if (rc == MEMCACHED_SUCCESS)
     {
         cout << "fetch key , return_key:" << return_key << " ,return value : " << return_value<< endl;
     }
     // delete data
-    rc = memcached_delete(memc,"key1",4,(time_t)0);
+    rc = memcached_delete(memc, "key1", 4, (time_t)0);
     if (rc == MEMCACHED_SUCCESS)
     {
         cout<< "delete key1 success!" << endl;

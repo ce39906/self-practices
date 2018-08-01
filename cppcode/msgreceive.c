@@ -1,9 +1,9 @@
-#include<unistd.h>
-#include<stdlib.h>
-#include<stdio.h>
-#include<string.h>
-#include<errno.h>
-#include<sys/msg.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <sys/msg.h>
 #include <iostream>
 
 using namespace std;
@@ -20,23 +20,23 @@ int main()
     struct msg_st data;
     long int msgtype = 0;
     //create msg queue
-    msgid = msgget((key_t)1234,0666| IPC_CREAT);
+    msgid = msgget((key_t)1234, 0666| IPC_CREAT);
     if(msgid == -1)
     {
         cout << "create msg queue failed"<< endl;        
     }
     while(running)
     {
-        if (msgrcv(msgid,(void*)&data,BUFSIZ,msgtype,0)== -1)
+        if (msgrcv(msgid, (void*)&data, BUFSIZ, msgtype, 0)== -1)
         {
             cout << "msgrcv faild with errno"<< errno <<endl;
         }
         cout << "your write: "<<data.text;
-        if(strncmp(data.text,"end",3)==0)
+        if(strncmp(data.text,"end", 3) == 0)
             running = 0;
     }
     // del msg queue
-    if(msgctl(msgid,IPC_RMID,0) == -1)
+    if(msgctl(msgid, IPC_RMID, 0) == -1)
     {
         cout << "del msg queue failed" <<endl;
         exit(EXIT_FAILURE);

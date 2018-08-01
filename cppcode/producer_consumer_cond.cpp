@@ -13,15 +13,15 @@ int buttom = 0;
 void* producer(void*)
 {
     int i;
-    for (i = 0;i<MAX*2;i++)
+    for (i = 0; i < MAX * 2; i++)
     {
         pthread_mutex_lock(&mutex);
-        while((top+1)%MAX == buttom)
+        while((top + 1) % MAX == buttom)
         {
-            pthread_cond_wait(&notfull,&mutex);
+            pthread_cond_wait(&notfull, &mutex);
         }
-        top = (top+1)%MAX;
-        printf("producer,top is%d\n",top);
+        top = (top + 1) % MAX;
+        printf("producer,top is%d\n", top);
         pthread_cond_signal(&notempty);
         pthread_mutex_unlock(&mutex);
     }
@@ -30,16 +30,16 @@ void* producer(void*)
 void* consumer(void*)
 {
     int i;
-    for (i=0;i<MAX*2;i++)
+    for (i = 0; i < MAX * 2; i++)
     {
         pthread_mutex_lock(&mutex);
         while(top % MAX == buttom)
         {
             printf("empty,consumer is waiting\n");
-            pthread_cond_wait(&notempty,&mutex);
+            pthread_cond_wait(&notempty, &mutex);
         }
-        buttom = (buttom+1)%MAX;
-        printf("consumer,buttom is%d\n",buttom);
+        buttom = (buttom + 1) % MAX;
+        printf("consumer,buttom is%d\n", buttom);
         pthread_cond_signal(&notfull);
         pthread_mutex_unlock(&mutex);
     }
@@ -53,15 +53,15 @@ int main()
     pthread_t thd3;
     pthread_t thd4;
 
-    pthread_create(&thd1,NULL,producer,NULL);
-    pthread_create(&thd2,NULL,consumer,NULL);
-    pthread_create(&thd3,NULL,producer,NULL);
-    pthread_create(&thd4,NULL,consumer,NULL);
+    pthread_create(&thd1, NULL, producer, NULL);
+    pthread_create(&thd2, NULL, consumer, NULL);
+    pthread_create(&thd3, NULL, producer, NULL);
+    pthread_create(&thd4, NULL, consumer, NULL);
 
-    pthread_join(thd1,NULL);
-    pthread_join(thd2,NULL);
-    pthread_join(thd3,NULL);
-    pthread_join(thd4,NULL);
+    pthread_join(thd1, NULL);
+    pthread_join(thd2, NULL);
+    pthread_join(thd3, NULL);
+    pthread_join(thd4, NULL);
 
     return 0;
 
