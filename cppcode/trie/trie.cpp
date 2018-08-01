@@ -132,7 +132,7 @@ void Trie::ReleaseTrie(const TrieNode* root)
 
 void Trie::PrintSuggs(const std::string& word) const
 {
-    const auto quoted_string = [] (const std::string str)
+    const auto quoted_string = [] (const std::string& str)
     {
         return "\"" + str + "\"";
     };
