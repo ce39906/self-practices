@@ -1,7 +1,7 @@
 /*************************************************************************
     > File Name: mostStonesRemovedWithSameRowOrColumn.cpp
-    > Author: carbon06
-    > Mail: carbon06@163.com 
+    > Author: ce39906
+    > Mail: ce39906@163.com 
     > Created Time: 2019-01-15 22:27:59
  ************************************************************************/
 class Solution {
@@ -98,4 +98,48 @@ private:
         }
     }
    
+};
+
+class Solution {
+public:
+    int removeStones(vector<vector<int>>& stones) {
+        for (const auto& stone : stones)
+        {
+            uni(stone[0], ~stone[1]);
+        }
+
+        return stones.size() - islands;
+    }
+private:
+    int find(int x)
+    {
+        if (!f.count(x))
+        {
+            f[x] = x;
+            islands++;
+            return x;
+        }
+
+        if (x == f[x])
+        {
+            return x;
+        }
+
+        f[x] = find(f[x]);
+        return f[x];
+    }
+
+    void uni(int x, int y)
+    {
+        x = find(x);
+        y = find(y);
+        if (x != y)
+        {
+            islands--;
+            f[x] = y;
+        }
+    }
+
+    int islands = 0;
+    unordered_map<int, int> f;
 };
