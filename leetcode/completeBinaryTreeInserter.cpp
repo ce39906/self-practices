@@ -95,3 +95,92 @@ private:
  * int param_1 = obj.insert(v);
  * TreeNode* param_2 = obj.get_root();
  */
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class CBTInserter {
+public:
+    CBTInserter(TreeNode* root) {
+        root_ = root;
+        levelOrderTraversal(root);
+    }
+    
+    int insert(int v) {
+        TreeNode* node = new TreeNode(v);
+        const int size = levels.back().size();
+        const int l = levels.size();
+        int res;
+        // last level full
+        if (1 << (l - 1) == size)
+        {
+            TreeNode* parent = levels.back().front();
+            res = parent->val;
+            parent->left = node;
+            levels.push_back(vector<TreeNode*>{node});
+        }
+        else // not full
+        {
+            TreeNode* parent = levels[l - 2][size / 2];
+            res = parent->val;
+            if (size & 1)
+            {
+                parent->right = node;
+            }
+            else
+            {
+                parent->left = node;
+            }
+            levels.back().push_back(node);
+        }
+        
+        return res;
+    }
+    
+    TreeNode* get_root() {
+        return root_;
+    }
+
+private:
+    void levelOrderTraversal(TreeNode* root)
+    {
+        queue<TreeNode*> que;
+        que.push(root);
+        while (!que.empty())
+        {
+            const int size = que.size();
+            vector<TreeNode*> level;
+            for (int i = 0; i < size; i++)
+            {
+                TreeNode* front = que.front();
+                que.pop();
+                level.push_back(front);
+                if (front->left)
+                {
+                    que.push(front->left);
+                }
+                
+                if (front->right)
+                {
+                    que.push(front->right);
+                }
+            }
+            levels.push_back(level);
+        }
+    }
+    
+    TreeNode* root_;
+    vector<vector<TreeNode*>> levels;
+};
+
+/**
+ * Your CBTInserter object will be instantiated and called as such:
+ * CBTInserter* obj = new CBTInserter(root);
+ * int param_1 = obj->insert(v);
+ * TreeNode* param_2 = obj->get_root();
+ */
