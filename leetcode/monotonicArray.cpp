@@ -57,3 +57,18 @@ public:
         return true;
     }
 };
+
+class Solution {
+public:
+    bool isMonotonic(vector<int>& A) {
+        bool increase = true;
+        bool decrease = true;
+        for (int i = 1; i < A.size(); i++)
+        {
+            increase &= (A[i] >= A[i - 1]);
+            decrease &= (A[i] <= A[i - 1]);
+        }
+
+        return increase || decrease;
+    }
+};
