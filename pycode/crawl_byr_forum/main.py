@@ -10,6 +10,7 @@ import crawl
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from hire_info_db import HireInfo, HireInfoDB
 from cos_client import TencentCloudClient
 
@@ -38,7 +39,7 @@ def select_former_data(board, days):
     return data
 
 def plot(data, board):
-    dates = [str(x[2]) for x in data]
+    dates = [x[2] for x in data]
     cur_user_nums = [x[3] for x in data]
     cur_post_nums = [x[5] for x in data]
     d = {'dates' : dates, 
@@ -48,6 +49,8 @@ def plot(data, board):
     df = pd.DataFrame(d)
     plt.cla()
     ax = plt.gca()
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
+    plt.gca().xaxis.set_major_locator(mdates.DayLocator())
     df.plot(title=board,
             kind='line',
             x='dates', 
@@ -63,7 +66,8 @@ def plot(data, board):
             marker='x',
             label='post_num',
             ax=ax)
-
+    ax.set_xlabel('')
+    plt.gcf().autofmt_xdate()
     plt.savefig(board + '.png')
 
 def main():
