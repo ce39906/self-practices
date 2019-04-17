@@ -59,6 +59,10 @@ def plot(data, board):
             marker='o',
             label='online_user_num',
             ax=ax)
+    
+    for x, y in zip(df['dates'], df['cur_user_num']):
+        plt.text(x, y, '%d' % y, ha='center', va='bottom', fontsize=9)
+    
     df.plot(kind='line',
             x='dates',
             y='cur_post_num',
@@ -66,6 +70,10 @@ def plot(data, board):
             marker='x',
             label='post_num',
             ax=ax)
+    
+    for x, y in zip(df['dates'], df['cur_post_num']):
+        plt.text(x, y, '%d' % y, ha='center', va='bottom', fontsize=9)
+    
     ax.set_xlabel('')
     plt.gcf().autofmt_xdate()
     plt.savefig(board + '.png')
