@@ -49,7 +49,7 @@ def plot(data, board):
     df = pd.DataFrame(d)
     plt.cla()
     ax = plt.gca()
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y/%m/%d'))
     plt.gca().xaxis.set_major_locator(mdates.DayLocator())
     df.plot(title=board,
             kind='line',
