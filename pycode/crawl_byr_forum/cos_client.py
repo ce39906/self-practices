@@ -17,7 +17,11 @@ class TencentCloudClient:
         region = 'ap-beijing'     
         token = None            
         scheme = 'https'  
-        config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key, Token=token, Scheme=scheme)
+        config = CosConfig(Region=region,
+                           SecretId=secret_id,
+                           SecretKey=secret_key,
+                           Token=token,
+                           Scheme=scheme)
         self.client = CosS3Client(config)
         self.url_prefix = 'https://myblog-********.cos.ap-beijing.myqcloud.com/'
 
